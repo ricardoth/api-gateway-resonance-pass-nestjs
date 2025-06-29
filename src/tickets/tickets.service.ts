@@ -3,14 +3,17 @@ import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class TicketsService {
 
   
   constructor(
-    private httpClient: HttpClientService
+    private readonly httpClient: HttpClientService,
+    private readonly configService: ConfigService
   ) {
+    console.log(this.configService.get<string>('urlApiDecimatio'));
     
   }
 
@@ -27,7 +30,7 @@ export class TicketsService {
 
     let mediosPagos = await this.httpClient.get<MedioPago>('https://api-decimatio-dev.azurewebsites.net/api/MedioPago', headers);
     console.log(mediosPagos);
-    return `This action returns all tickets`;
+    return mediosPagos;
   }
 
   findOne(id: number) {
