@@ -4,6 +4,7 @@ import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
 import { ConfigService } from '@nestjs/config';
+import { PaginationTicketDto } from './dto/pagination-ticket.dto';
 
 @Injectable()
 export class TicketsService {
@@ -13,7 +14,6 @@ export class TicketsService {
     private readonly httpClient: HttpClientService,
     private readonly configService: ConfigService
   ) {
-    console.log(this.configService.get<string>('urlApiDecimatio'));
     
   }
 
@@ -21,16 +21,22 @@ export class TicketsService {
     return 'This action adds a new ticket';
   }
 
-  async findAll() {
+  async findAll(paginationTicketDto: PaginationTicketDto) {
+    console.log(paginationTicketDto, 'PAGINACION')
+    let url = 'https://api-decimatio-dev.azurewebsites.net/api/Ticket';
     const headers: AxiosRequestConfig = {
       headers: {
-        'Authorization': 'Basic VXNyQXBpRGVjaW1hdGlvOmExMzk5NzQyM2I2ZGY2YTcxMzE5ODFkMjE1ZjFkM2Ji'
+        'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userDecimatioBasicAuth')}:${this.configService.get<string>('passDecimatioBasicAuth')}`).toString('base64')}`
       }
     };
 
-    let mediosPagos = await this.httpClient.get<MedioPago>('https://api-decimatio-dev.azurewebsites.net/api/MedioPago', headers);
-    console.log(mediosPagos);
-    return mediosPagos;
+    if(paginationTicketDto) {
+      url = url + `?idTicket=${paginationTicketDto.idTicket}`
+    }
+
+    let tickets = await this.httpClient.get<any>(url, headers);
+    // console.log(mediosPagos);
+    return tickets;
   }
 
   findOne(id: number) {
