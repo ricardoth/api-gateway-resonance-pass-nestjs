@@ -41,7 +41,7 @@ export class TicketsService {
         PageNumber: PageNumber,
         PageSize: PageSize
       }
-
+      
       const tickets = await this.httpClient.get<Ticket>(url, this.config);
       return tickets;
     } catch (error) {
