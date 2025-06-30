@@ -15,7 +15,6 @@ export class TicketsController {
 
   @Get()
   findAll(@Query() paginationTicketDto: PaginationTicketDto) {
-    console.log(paginationTicketDto)
     return this.ticketsService.findAll(paginationTicketDto);
   }
 

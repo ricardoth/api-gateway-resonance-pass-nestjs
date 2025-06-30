@@ -22,7 +22,8 @@ export class HttpClientService {
             //  console.log(response, 'RESPUESTA: ')
              return response.data;
         } catch (error) {
-            console.log(error, '[ERROR]')
+            // console.log(error, '[ERROR]')
+            throw error;
         }
     }
 

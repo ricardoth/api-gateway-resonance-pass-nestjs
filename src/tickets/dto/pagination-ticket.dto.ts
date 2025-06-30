@@ -8,31 +8,37 @@ export class PaginationTicketDto {
     @IsOptional()
     idTicket?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
     idUsuario?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
     idEvento?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
     idSector?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
     idMedioPago?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
     PageSize?: number;
 
+    @Type(() => Number)
     @IsNumber()
     @IsPositive()
     @IsOptional()
