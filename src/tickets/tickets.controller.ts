@@ -3,6 +3,7 @@ import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { PaginationTicketDto } from './dto/pagination-ticket.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('tickets')
 export class TicketsController {
@@ -14,6 +15,9 @@ export class TicketsController {
   }
 
   @Get()
+  @ApiResponse({status: 200, description: 'Executed Sucessfully'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   findAll(@Query() paginationTicketDto: PaginationTicketDto) {
     return this.ticketsService.findAll(paginationTicketDto);
   }

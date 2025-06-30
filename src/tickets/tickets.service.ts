@@ -1,23 +1,25 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { PaginationTicketDto } from './dto/pagination-ticket.dto';
+import { Ticket } from './entities/ticket.entity';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class TicketsService {
-  private headers: AxiosRequestConfig;
+  private config: AxiosRequestConfig;
 
   constructor(
     private readonly httpClient: HttpClientService,
     private readonly configService: ConfigService
   ) {
-    this.headers = {
+    this.config = {
         headers: {
           'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userDecimatioBasicAuth')}:${this.configService.get<string>('passDecimatioBasicAuth')}`).toString('base64')}`
-        }
+        },
       };
   }
 
@@ -30,23 +32,21 @@ export class TicketsService {
       const { idTicket, idUsuario, idEvento, idSector, idMedioPago, PageNumber, PageSize } = paginationTicketDto;
       let url = `${this.configService.get<string>('urlApiDecimatio')}Ticket`;
 
-      if(idTicket) url += `?idTicket=${paginationTicketDto.idTicket}`;
-      if(idUsuario) url += `&idUsuario=${paginationTicketDto.idUsuario}`;
-      if(idEvento) url += `&idEvento=${paginationTicketDto.idEvento}`;
-      if(idSector) url += `&idSector=${paginationTicketDto.idSector}`;
-
-      console.log(url);
-      let tickets = await this.httpClient.get<any>(url, this.headers);
+      this.config.params = {
+        idTicket: idTicket,
+        idUsuario: idUsuario,
+        idEvento: idEvento,
+        idSector: idSector,
+        idMedioPago: idMedioPago,
+        PageNumber: PageNumber,
+        PageSize: PageSize
+      }
+      
+      const tickets = await this.httpClient.get<Ticket>(url, this.config);
       return tickets;
-
     } catch (error) {
-      console.log(error)
-      if(error.status == 400) throw new NotFoundException(` ${error}  ErrorRRR`);
-      throw error
+      return this.handleExceptions(error);
     }
- 
-
-    
   }
 
   findOne(id: number) {
@@ -60,9 +60,10 @@ export class TicketsService {
   remove(id: number) {
     return `This action removes a #${id} ticket`;
   }
-}
 
-class MedioPago {
-  idMedioPago: number;
-  nombreMedioPago: string;
+  private handleExceptions(error: any) {
+      if(error.status == 400) throw new BadRequestException(`${error}`);
+      if(error.status == 404) throw new NotFoundException(`${error}`);
+      throw new InternalServerErrorException(`${error}`);
+  }
 }
