@@ -48,10 +48,19 @@ export class TicketsService {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetTicketQR?idTicket=${idTicket}`;
       const qrTicket = await this.httpClient.get<any>(url, this.config);
-      console.log(qrTicket)
       return qrTicket;
     } catch (error) {
-      console.log(error)
+      this.handleExceptions(error);
+    }
+  }
+
+  async findVoucherTicketPDF(idTicket: number) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetTicketVoucherPDF?idTicket=${idTicket}`;
+      const voucherPdfTicket = await this.httpClient.get<any>(url, this.config);
+      return voucherPdfTicket;
+    } catch (error) {
+      console.log(error, 'ERRO')
       this.handleExceptions(error);
     }
   }

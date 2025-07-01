@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { PaginationTicketDto } from './dto/pagination-ticket.dto';
 import { ApiResponse } from '@nestjs/swagger';
@@ -19,8 +19,16 @@ export class TicketsController {
   @ApiResponse({status: 200, description: 'OK'})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
-  findQRTicket(@Param('idTicket') id: number) {
+  findQRTicket(@Param('idTicket', ParseIntPipe) id: number) {
     return this.ticketsService.findQRTicket(id);
+  }
+
+  @Get('getVoucherPdf/:idTicket')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  findVoucherPdfTicket(@Param('idTicket', ParseIntPipe) id: number) {
+    return this.ticketsService.findVoucherTicketPDF(id);
   }
 
 }
