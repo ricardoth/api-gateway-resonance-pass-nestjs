@@ -60,7 +60,16 @@ export class TicketsService {
       const voucherPdfTicket = await this.httpClient.get<any>(url, this.config);
       return voucherPdfTicket;
     } catch (error) {
-      console.log(error, 'ERRO')
+      this.handleExceptions(error);
+    }
+  }
+
+  async findAllPreferenceTickets() {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetPreferenceTickets`;
+      const preferenceTickets = await this.httpClient.get<any>(url, this.config);
+      return preferenceTickets;
+    } catch (error) {
       this.handleExceptions(error);
     }
   }

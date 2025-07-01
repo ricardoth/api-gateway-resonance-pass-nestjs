@@ -31,4 +31,11 @@ export class TicketsController {
     return this.ticketsService.findVoucherTicketPDF(id);
   }
 
+  @Get('getPreferenceTickets')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  findAllPreferenceTicket() {
+    return this.ticketsService.findAllPreferenceTickets();
+  }
 }
