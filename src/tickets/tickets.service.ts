@@ -1,15 +1,13 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { CreateTicketDto } from './dto/create-ticket.dto';
-import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { PaginationTicketDto } from './dto/pagination-ticket.dto';
 import { Ticket } from './entities/ticket.entity';
 import { TicketQR } from './entities/ticketQR.entity';
-import { plainToInstance } from 'class-transformer';
 import { ApiResponse } from 'src/types/api-response.interface';
 import { mapEntityResponse } from 'src/utils/map-entity';
+import { TicketPreference } from './entities/ticketPreference.entity';
 
 @Injectable()
 export class TicketsService {
@@ -62,8 +60,9 @@ export class TicketsService {
   async findVoucherTicketPDF(idTicket: number) {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetTicketVoucherPDF?idTicket=${idTicket}`;
-      const voucherPdfTicket = await this.httpClient.get<any>(url, this.config);
-      return voucherPdfTicket;
+      const voucherPdfTicket = await this.httpClient.get<ApiResponse<TicketQR>>(url, this.config);
+      const mapVoucher = mapEntityResponse(TicketQR, voucherPdfTicket);
+      return mapVoucher;
     } catch (error) {
       this.handleExceptions(error);
     }
@@ -72,8 +71,9 @@ export class TicketsService {
   async findAllPreferenceTickets() {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetPreferenceTickets`;
-      const preferenceTickets = await this.httpClient.get<any>(url, this.config);
-      return preferenceTickets;
+      const preferenceTickets = await this.httpClient.get<ApiResponse<TicketPreference>>(url, this.config);
+      const mapPreferenceTickets = mapEntityResponse(TicketPreference, preferenceTickets);
+      return mapPreferenceTickets;
     } catch (error) {
       this.handleExceptions(error);
     }

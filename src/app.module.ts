@@ -7,6 +7,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EnvConfiguration } from './config/app.config';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { EventosModule } from './eventos/eventos.module';
+import { PreferencesModule } from './preferences/preferences.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -18,7 +22,7 @@ import { EnvConfiguration } from './config/app.config';
       rootPath: join(__dirname, '..', 'public'),
     }),
     TicketsModule, 
-    HttpClientModule
+    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
