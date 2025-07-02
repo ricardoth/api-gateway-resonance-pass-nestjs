@@ -15,14 +15,12 @@ export class HttpClientService {
     }
 
     public async get<T>(url: string, config?: AxiosRequestConfig) {
-        // this.logger.log(`[INFO] GET Request to: ${url}`);
+        this.logger.log(`[INFO] GET Request to: ${url}`);
 
         try {
-             const response = await firstValueFrom(this.httpService.get<T[]>(url, config));
-            //  console.log(response, 'RESPUESTA: ')
+             const response = await firstValueFrom(this.httpService.get<T>(url, config));
              return response.data;
         } catch (error) {
-            // console.log(error, '[ERROR]')
             throw error;
         }
     }
