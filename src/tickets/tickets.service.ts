@@ -8,6 +8,7 @@ import { TicketQR } from './entities/ticketQR.entity';
 import { ApiResponse } from 'src/types/api-response.interface';
 import { mapEntityResponse } from 'src/utils/map-entity';
 import { TicketPreference } from './entities/ticketPreference.entity';
+import { handleExceptions } from 'src/utils/handle-exceptions';
 
 @Injectable()
 export class TicketsService {
@@ -42,7 +43,7 @@ export class TicketsService {
       const tickets = await this.httpClient.get<Ticket>(url, this.config);
       return tickets;
     } catch (error) {
-      return this.handleExceptions(error);
+      handleExceptions(error);
     }
   }
 
@@ -53,7 +54,7 @@ export class TicketsService {
       const mapEntity = mapEntityResponse(TicketQR, response);
       return mapEntity;
     } catch (error) {
-      this.handleExceptions(error);
+      handleExceptions(error);
     }
   }
 
@@ -64,7 +65,7 @@ export class TicketsService {
       const mapVoucher = mapEntityResponse(TicketQR, voucherPdfTicket);
       return mapVoucher;
     } catch (error) {
-      this.handleExceptions(error);
+      handleExceptions(error);
     }
   }
 
@@ -75,13 +76,9 @@ export class TicketsService {
       const mapPreferenceTickets = mapEntityResponse(TicketPreference, preferenceTickets);
       return mapPreferenceTickets;
     } catch (error) {
-      this.handleExceptions(error);
+      handleExceptions(error);
     }
   }
 
-  private handleExceptions(error: any) {
-      if(error.status == 400) throw new BadRequestException(`${error}`);
-      if(error.status == 404) throw new NotFoundException(`${error}`);
-      throw new InternalServerErrorException(`${error}`);
-  }
+  
 }

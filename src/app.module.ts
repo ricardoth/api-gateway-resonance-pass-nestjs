@@ -11,6 +11,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { EventosModule } from './eventos/eventos.module';
 import { PreferencesModule } from './preferences/preferences.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SectoresModule } from './sectores/sectores.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { NotificationsModule } from './notifications/notifications.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     TicketsModule, 
-    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule
+    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule, SectoresModule
   ],
   controllers: [AppController],
   providers: [AppService],
