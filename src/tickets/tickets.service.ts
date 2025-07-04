@@ -25,6 +25,7 @@ export class TicketsService {
       };
   }
 
+  //#region GET Methods
   async findAll(paginationTicketDto: PaginationTicketDto) {
     try {
       const { idTicket, idUsuario, idEvento, idSector, idMedioPago, PageNumber, PageSize } = paginationTicketDto;
@@ -81,5 +82,31 @@ export class TicketsService {
     }
   }
 
+  async findPreferenceTicketByTransactionId(transactionId: string) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetPreferenceTickets/${transactionId}`;
+      const preferenceTicket = await this.httpClient.get<ApiResponse<TicketPreferenceDto>>(url, this.config);
+      const mapPreferenceTicket = mapEntityResponse(TicketPreferenceDto, preferenceTicket);
+      return mapPreferenceTicket;
+    } catch (error) {
+      handleExceptions(error);
+    }
+  }
+  //#region GET Methods
+
+  //#region POST Methods
+  //#endregion POST Methods
+
+  //#region DELETE Methods
+  async deleteTicket(idTicket: number) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket?idTicket=${idTicket}`;
+      const response = await this.httpClient.delete(url, this.config);
+      return response;
+    } catch (error) {
+      handleExceptions(error);
+    }
+  }
+  //#endregion DELETE Methods
   
 }

@@ -25,4 +25,15 @@ export class HttpClientService {
         }
     }
 
+    public async delete(url: string, config?: AxiosRequestConfig) {
+        this.logger.log(`[INFO] DELETE Request to: ${url}`);
+
+        try {
+            const response = await firstValueFrom(this.httpService.delete(url, config));
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }

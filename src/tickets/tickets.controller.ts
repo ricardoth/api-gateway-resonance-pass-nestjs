@@ -38,4 +38,20 @@ export class TicketsController {
   findAllPreferenceTicket() {
     return this.ticketsService.findAllPreferenceTickets();
   }
+
+  @Get('getPreferenceTickets/:transactionId')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  findPreferenceTicketByTransactionId(@Param('transactionId') transactionId: string) {
+    return this.ticketsService.findPreferenceTicketByTransactionId(transactionId);
+  }
+
+  @Delete(':idTicket')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  deleteTicket(@Param('idTicket', ParseIntPipe) id: number) {
+    return this.ticketsService.deleteTicket(id);
+  }
 }
