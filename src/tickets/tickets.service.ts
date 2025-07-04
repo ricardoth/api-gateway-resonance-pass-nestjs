@@ -3,12 +3,12 @@ import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { PaginationTicketDto } from './dto/pagination-ticket.dto';
-import { Ticket } from './entities/ticket.entity';
-import { TicketQR } from './entities/ticketQR.entity';
+import { TicketQRDto } from './dto/ticket-qr.dto';
 import { ApiResponse } from 'src/types/api-response.interface';
 import { mapEntityResponse } from 'src/utils/map-entity';
-import { TicketPreference } from './entities/ticketPreference.entity';
+import { TicketPreferenceDto } from './dto/ticket-preference.dto';
 import { handleExceptions } from 'src/utils/handle-exceptions';
+import { TicketDto } from './dto/ticket.dto';
 
 @Injectable()
 export class TicketsService {
@@ -40,7 +40,7 @@ export class TicketsService {
         PageSize: PageSize
       }
       
-      const tickets = await this.httpClient.get<Ticket>(url, this.config);
+      const tickets = await this.httpClient.get<TicketDto>(url, this.config);
       return tickets;
     } catch (error) {
       handleExceptions(error);
@@ -50,8 +50,8 @@ export class TicketsService {
   async findQRTicket(idTicket: number) {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetTicketQR?idTicket=${idTicket}`;
-      const response = await this.httpClient.get<ApiResponse<TicketQR>>(url, this.config);
-      const mapEntity = mapEntityResponse(TicketQR, response);
+      const response = await this.httpClient.get<ApiResponse<TicketQRDto>>(url, this.config);
+      const mapEntity = mapEntityResponse(TicketQRDto, response);
       return mapEntity;
     } catch (error) {
       handleExceptions(error);
@@ -61,8 +61,8 @@ export class TicketsService {
   async findVoucherTicketPDF(idTicket: number) {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetTicketVoucherPDF?idTicket=${idTicket}`;
-      const voucherPdfTicket = await this.httpClient.get<ApiResponse<TicketQR>>(url, this.config);
-      const mapVoucher = mapEntityResponse(TicketQR, voucherPdfTicket);
+      const voucherPdfTicket = await this.httpClient.get<ApiResponse<TicketQRDto>>(url, this.config);
+      const mapVoucher = mapEntityResponse(TicketQRDto, voucherPdfTicket);
       return mapVoucher;
     } catch (error) {
       handleExceptions(error);
@@ -72,8 +72,8 @@ export class TicketsService {
   async findAllPreferenceTickets() {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetPreferenceTickets`;
-      const preferenceTickets = await this.httpClient.get<ApiResponse<TicketPreference>>(url, this.config);
-      const mapPreferenceTickets = mapEntityResponse(TicketPreference, preferenceTickets);
+      const preferenceTickets = await this.httpClient.get<ApiResponse<TicketPreferenceDto>>(url, this.config);
+      const mapPreferenceTickets = mapEntityResponse(TicketPreferenceDto, preferenceTickets);
       return mapPreferenceTickets;
     } catch (error) {
       handleExceptions(error);

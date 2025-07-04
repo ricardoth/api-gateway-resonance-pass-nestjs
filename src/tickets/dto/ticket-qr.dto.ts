@@ -1,6 +1,7 @@
 import { Expose } from "class-transformer";
+import { TicketDto } from "./ticket.dto";
 
-export class TicketQR {
+export class TicketQRDto {
     @Expose()
     idTicketQR: number;
     @Expose()
@@ -11,5 +12,6 @@ export class TicketQR {
     activo: boolean;
     @Expose()
     fechaCreacion: string;
-    
+    @Expose()
+    ticket: TicketDto;
 }

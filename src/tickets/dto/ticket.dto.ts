@@ -1,6 +1,8 @@
-import { Expose } from "class-transformer";
+import { Expose, Type } from "class-transformer";
+import { EventoDto } from "src/eventos/dto/evento.dto";
+import { BaseDto } from "src/types/base.dto";
 
-export class Ticket {
+export class TicketDto extends BaseDto {
     @Expose()
     idTicket: number;
     @Expose()
@@ -18,5 +20,7 @@ export class Ticket {
     @Expose()
     fechaTicket: string;
     @Expose()
-    activo: boolean;
+    @Type(() => EventoDto)
+    evento: EventoDto;
+    
 }

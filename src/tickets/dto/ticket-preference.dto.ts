@@ -1,10 +1,10 @@
 import { Expose, Type } from "class-transformer";
-import { EventoPreference } from "src/eventos/entities/eventoPreference.entity";
+import { EventoPreference } from "src/eventos/dto/evento-preference.dto";
 import { MerchantOrder } from "src/preferences/entities/merchantOrder.entity";
-import { SectorPreference } from "src/sectores/entities/sectorPreference.entity";
-import { UsuarioPreference } from "src/usuarios/entities/usuarioPreference.entity";
+import { SectorPreference } from "src/sectores/dto/sector-preference.dto";
+import { UsuarioPreferenceDto } from "src/usuarios/dto/usuario-preference.dto";
 
-export class TicketPreference  {
+export class TicketPreferenceDto  {
     @Expose()
     idPreference: number;
     @Expose()
@@ -19,8 +19,8 @@ export class TicketPreference  {
     @Type(() => MerchantOrder) 
     merchantOrder: MerchantOrder;
     @Expose()
-    @Type(() => UsuarioPreference) 
-    usuario: UsuarioPreference;
+    @Type(() => UsuarioPreferenceDto) 
+    usuario: UsuarioPreferenceDto;
     @Expose()
     @Type(() => EventoPreference)
     evento: EventoPreference;

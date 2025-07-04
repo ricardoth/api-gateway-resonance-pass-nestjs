@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 
-export class UsuarioPreference {
+export class UsuarioPreferenceDto {
     @Expose()
     idUsuario: number;
     @Expose()
