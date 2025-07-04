@@ -40,8 +40,9 @@ export class TicketsService {
         PageSize: PageSize
       }
       
-      const tickets = await this.httpClient.get<TicketDto>(url, this.config);
-      return tickets;
+      const tickets = await this.httpClient.get<ApiResponse<TicketDto>>(url, this.config);
+      const mapTickets = mapEntityResponse(TicketDto, tickets);
+      return mapTickets;
     } catch (error) {
       handleExceptions(error);
     }
