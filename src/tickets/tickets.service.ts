@@ -9,6 +9,7 @@ import { mapEntityResponse } from 'src/utils/map-entity';
 import { TicketPreferenceDto } from './dto/ticket-preference.dto';
 import { handleExceptions } from 'src/utils/handle-exceptions';
 import { TicketDto } from './dto/ticket.dto';
+import { CreateTicketDto } from './dto/create-ticket.dto';
 
 @Injectable()
 export class TicketsService {
@@ -25,6 +26,7 @@ export class TicketsService {
       };
   }
 
+  //#region GET Methods
   async findAll(paginationTicketDto: PaginationTicketDto) {
     try {
       const { idTicket, idUsuario, idEvento, idSector, idMedioPago, PageNumber, PageSize } = paginationTicketDto;
@@ -40,8 +42,9 @@ export class TicketsService {
         PageSize: PageSize
       }
       
-      const tickets = await this.httpClient.get<TicketDto>(url, this.config);
-      return tickets;
+      const tickets = await this.httpClient.get<ApiResponse<TicketDto>>(url, this.config);
+      const mapTickets = mapEntityResponse(TicketDto, tickets);
+      return mapTickets;
     } catch (error) {
       handleExceptions(error);
     }
@@ -80,5 +83,46 @@ export class TicketsService {
     }
   }
 
+  async findPreferenceTicketByTransactionId(transactionId: string) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GetPreferenceTickets/${transactionId}`;
+      const preferenceTicket = await this.httpClient.get<ApiResponse<TicketPreferenceDto>>(url, this.config);
+      const mapPreferenceTicket = mapEntityResponse(TicketPreferenceDto, preferenceTicket);
+      return mapPreferenceTicket;
+    } catch (error) {
+      handleExceptions(error);
+    }
+  }
+
+ 
+  //#region GET Methods
+
+  //#region POST Methods
+  async createTicket(ticketDto: CreateTicketDto) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket`;
+      const response = await this.httpClient.post<ApiResponse<TicketDto>>(url, ticketDto, this.config);
+      console.log(response);
+      const mapEntity = mapEntityResponse(TicketDto, response);
+      return mapEntity;
+    } catch (error) {
+      handleExceptions(error);
+    }
+
+  }
+
+  //#endregion POST Methods
+
+  //#region DELETE Methods
+  async deleteTicket(idTicket: number) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket?idTicket=${idTicket}`;
+      const response = await this.httpClient.delete(url, this.config);
+      return response;
+    } catch (error) {
+      handleExceptions(error);
+    }
+  }
+  //#endregion DELETE Methods
   
 }

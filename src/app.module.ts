@@ -14,6 +14,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { SectoresModule } from './sectores/sectores.module';
 import { LugaresModule } from './lugares/lugares.module';
 import { ComunasModule } from './comunas/comunas.module';
+import { MediosPagosModule } from './medios-pagos/medios-pagos.module';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { ComunasModule } from './comunas/comunas.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     TicketsModule, 
-    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule, SectoresModule, LugaresModule, ComunasModule
+    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule, SectoresModule, LugaresModule, ComunasModule, MediosPagosModule
   ],
   controllers: [AppController],
   providers: [AppService],
