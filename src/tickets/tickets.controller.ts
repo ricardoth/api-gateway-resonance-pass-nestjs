@@ -57,6 +57,14 @@ export class TicketsController {
     return this.ticketsService.createTicket(createTicketDto);
   }
 
+  @Post('generateTickets')
+  @ApiResponse({status: 201, description: 'Created'}) 
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  generateTickets(@Body() createTicketDto: CreateTicketDto[]) {
+    return this.ticketsService.generateTickets(createTicketDto);
+  }
+
   @Delete(':idTicket')
   @ApiResponse({status: 200, description: 'OK'})
   @ApiResponse({status: 400, description: 'Bad Request'})

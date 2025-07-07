@@ -93,8 +93,6 @@ export class TicketsService {
       handleExceptions(error);
     }
   }
-
- 
   //#region GET Methods
 
   //#region POST Methods
@@ -108,7 +106,18 @@ export class TicketsService {
     } catch (error) {
       handleExceptions(error);
     }
+  }
 
+  async generateTickets(ticketsDto: CreateTicketDto[]) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GenerarTickets`;
+      const response = await this.httpClient.post<ApiResponse<TicketDto[]>>(url, ticketsDto, this.config);
+      console.log(response);
+      const mapEntity = mapEntityResponse(TicketDto, response);
+      return mapEntity;
+    } catch (error) {
+      handleExceptions(error);
+    }
   }
 
   //#endregion POST Methods
