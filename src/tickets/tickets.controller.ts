@@ -4,6 +4,7 @@ import { PaginationTicketDto } from './dto/pagination-ticket.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { TicketDto } from './dto/ticket.dto';
 import { CreateTicketDto } from './dto/create-ticket.dto';
+import { CreateTicketQueueDto } from './dto/create-ticket-queue.dto';
 
 @Controller('tickets')
 export class TicketsController {
@@ -63,6 +64,15 @@ export class TicketsController {
   @ApiResponse({status: 404, description: 'Not Found'})
   generateTickets(@Body() createTicketDto: CreateTicketDto[]) {
     return this.ticketsService.generateTickets(createTicketDto);
+  }
+
+  @Post('generateTicketQueue')
+  @ApiResponse({status: 201, description: 'Created'}) 
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  generateTicketQueue(@Body() createTicketQueue: CreateTicketQueueDto) {
+    console.log(createTicketQueue);
+    return this.ticketsService.generateTicketQueue(createTicketQueue);
   }
 
   @Delete(':idTicket')

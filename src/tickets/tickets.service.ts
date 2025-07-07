@@ -10,6 +10,7 @@ import { TicketPreferenceDto } from './dto/ticket-preference.dto';
 import { handleExceptions } from 'src/utils/handle-exceptions';
 import { TicketDto } from './dto/ticket.dto';
 import { CreateTicketDto } from './dto/create-ticket.dto';
+import { CreateTicketQueueDto } from './dto/create-ticket-queue.dto';
 
 @Injectable()
 export class TicketsService {
@@ -112,9 +113,19 @@ export class TicketsService {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/GenerarTickets`;
       const response = await this.httpClient.post<ApiResponse<TicketDto[]>>(url, ticketsDto, this.config);
-      console.log(response);
       const mapEntity = mapEntityResponse(TicketDto, response);
       return mapEntity;
+    } catch (error) {
+      handleExceptions(error);
+    }
+  }
+
+  async generateTicketQueue(createTicketQueue: CreateTicketQueueDto) {
+    try {
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Ticket/TicketQueue`;
+      const response = await this.httpClient.post<any>(url, createTicketQueue, this.config);
+      console.log(response, 'RESPUESTA API');
+      return response;
     } catch (error) {
       handleExceptions(error);
     }

@@ -6,20 +6,18 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class HttpClientService {
     private readonly logger = new Logger(HttpClientService.name);
-
    
     constructor(
         private readonly httpService: HttpService
     ) {
-        
     }
 
     public async get<T>(url: string, config?: AxiosRequestConfig) {
         this.logger.log(`[INFO] GET Request to: ${url}`);
 
         try {
-             const response = await firstValueFrom(this.httpService.get<T>(url, config));
-             return response.data;
+            const response = await firstValueFrom(this.httpService.get<T>(url, config));
+            return response.data;
         } catch (error) {
             throw error;
         }
