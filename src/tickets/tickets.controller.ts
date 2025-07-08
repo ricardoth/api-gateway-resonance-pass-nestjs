@@ -1,14 +1,17 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
-import { ApiResponse } from '@nestjs/swagger';
-import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto } from './dto/index';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse as response }  from 'src/types/api-response.interface';
+import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto, TicketDto, TicketQRDto } from './dto/index';
+import { createApiResponseListDto } from 'src/types/create-api-response.dto';
 
+@ApiTags('Tickets')
 @Controller('tickets')
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Get()
-  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketDto), isArray: true})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findAll(@Query() paginationTicketDto: PaginationTicketDto) {
@@ -16,7 +19,7 @@ export class TicketsController {
   }
 
   @Get('getQR/:idTicket')
-  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 200, description: 'OK', type: TicketQRDto})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findQRTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -24,7 +27,7 @@ export class TicketsController {
   }
 
   @Get('getVoucherPdf/:idTicket')
-  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 200, description: 'OK', type: TicketQRDto})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findVoucherPdfTicket(@Param('idTicket', ParseIntPipe) id: number) {

@@ -1,7 +1,9 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Exclude, Expose } from "class-transformer";
 import { BaseDto } from "src/types/base.dto";
 
 export class UsuarioDto extends BaseDto {
+    @ApiProperty({example: "Id del Usuario"})
     @Expose()
     idUsuario: number;
     @Expose()
