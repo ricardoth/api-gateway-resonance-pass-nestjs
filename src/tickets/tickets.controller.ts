@@ -1,10 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
-import { PaginationTicketDto } from './dto/pagination-ticket.dto';
 import { ApiResponse } from '@nestjs/swagger';
-import { TicketDto } from './dto/ticket.dto';
-import { CreateTicketDto } from './dto/create-ticket.dto';
-import { CreateTicketQueueDto } from './dto/create-ticket-queue.dto';
+import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto } from './dto/index';
 
 @Controller('tickets')
 export class TicketsController {

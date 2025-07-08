@@ -1,16 +1,11 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { AxiosRequestConfig } from 'axios';
 import { ConfigService } from '@nestjs/config';
-import { PaginationTicketDto } from './dto/pagination-ticket.dto';
-import { TicketQRDto } from './dto/ticket-qr.dto';
 import { ApiResponse } from 'src/types/api-response.interface';
 import { mapEntityResponse } from 'src/utils/map-entity';
-import { TicketPreferenceDto } from './dto/ticket-preference.dto';
 import { handleExceptions } from 'src/utils/handle-exceptions';
-import { TicketDto } from './dto/ticket.dto';
-import { CreateTicketDto } from './dto/create-ticket.dto';
-import { CreateTicketQueueDto } from './dto/create-ticket-queue.dto';
+import { CreateTicketQueueDto, CreateTicketDto, TicketDto, TicketPreferenceDto, TicketQRDto, PaginationTicketDto } from './dto/index';
 
 @Injectable()
 export class TicketsService {
