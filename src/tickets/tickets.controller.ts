@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe,
 import { TicketsService } from './tickets.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResponse as response }  from 'src/types/api-response.interface';
-import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto, TicketDto, TicketQRDto } from './dto/index';
-import { createApiResponseListDto } from 'src/types/create-api-response.dto';
+import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto, TicketDto, TicketQRDto, TicketPreferenceDto } from './dto/index';
+import { createApiResponseDto, createApiResponseListDto } from 'src/types/create-api-response.dto';
 
 @ApiTags('Tickets')
 @Controller('tickets')
@@ -19,7 +19,7 @@ export class TicketsController {
   }
 
   @Get('getQR/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: TicketQRDto})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto)})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findQRTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -27,7 +27,7 @@ export class TicketsController {
   }
 
   @Get('getVoucherPdf/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: TicketQRDto})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto)})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findVoucherPdfTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -35,7 +35,7 @@ export class TicketsController {
   }
 
   @Get('getPreferenceTickets')
-  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto), isArray: true})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findAllPreferenceTicket() {
@@ -43,7 +43,7 @@ export class TicketsController {
   }
 
   @Get('getPreferenceTickets/:transactionId')
-  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto), isArray: true })
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findPreferenceTicketByTransactionId(@Param('transactionId') transactionId: string) {
@@ -51,7 +51,7 @@ export class TicketsController {
   }
 
   @Post('createTicket')
-  @ApiResponse({status: 201, description: 'Created'}) 
+  @ApiResponse({status: 201, description: 'Created', type: createApiResponseDto(TicketDto)}) 
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   createTicket(@Body() createTicketDto: CreateTicketDto) {
@@ -59,7 +59,7 @@ export class TicketsController {
   }
 
   @Post('generateTickets')
-  @ApiResponse({status: 201, description: 'Created'}) 
+  @ApiResponse({status: 201, description: 'Created', type: createApiResponseListDto(TicketDto), isArray: true }) 
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   generateTickets(@Body() createTicketDto: CreateTicketDto[]) {
