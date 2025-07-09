@@ -5,7 +5,7 @@ export class ComunasController {
   constructor(private readonly comunasService: ComunasService) {}
 
   @Get(':idRegion')
-  findOneByRegion(@Param('idRegion') idRegion: number) {
-    return this.comunasService.findOneByRegion(idRegion);
+  findAllByRegion(@Param('idRegion') idRegion: number) {
+    return this.comunasService.findAllByRegion(idRegion);
   }
 }

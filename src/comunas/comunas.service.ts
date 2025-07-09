@@ -22,7 +22,7 @@ export class ComunasService {
       };
   }
 
-  async findOneByRegion(idComuna: number) {
+  async findAllByRegion(idComuna: number) {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Comuna/${idComuna}`;
       const response = await this.httpClient.get<ApiResponse<ComunaDto>>(url, this.config);
