@@ -11,6 +11,6 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule,
     HttpClientModule
   ],
-  // exports: [TicketsService]
+  exports: [TicketsService]
 })
 export class TicketsModule {}

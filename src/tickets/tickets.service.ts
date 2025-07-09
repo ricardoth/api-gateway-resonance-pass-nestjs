@@ -122,6 +122,7 @@ export class TicketsService {
       console.log(response, 'RESPUESTA API');
       return response;
     } catch (error) {
+       console.log(error, 'RESPUESTA ERR');
       handleExceptions(error);
     }
   }

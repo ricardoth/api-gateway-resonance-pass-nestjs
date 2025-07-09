@@ -71,7 +71,6 @@ export class TicketsController {
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   generateTicketQueue(@Body() createTicketQueue: CreateTicketQueueDto) {
-    console.log(createTicketQueue);
     return this.ticketsService.generateTicketQueue(createTicketQueue);
   }
 
