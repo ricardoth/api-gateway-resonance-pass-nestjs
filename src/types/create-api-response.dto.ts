@@ -1,7 +1,7 @@
 import { Type } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 
-export function createApiResponseListDto<T>(type: Type<T>, name: string = 'CreateApiResponseListDto') {
+export function createApiResponseListDto<T>(type: Type<T>, name: string) {
     class CreateApiResponseListDto {
         @ApiProperty({ type, isArray: true })
         data: T[];
@@ -12,7 +12,7 @@ export function createApiResponseListDto<T>(type: Type<T>, name: string = 'Creat
     return CreateApiResponseListDto;
 }
 
-export function createApiResponseDto<T>(type: Type<T>, name: string = 'CreateApiResponseDto') {
+export function createApiResponseDto<T>(type: Type<T>, name: string) {
     class CreateApiResponseDto {
         @ApiProperty({ type })
         data: T;

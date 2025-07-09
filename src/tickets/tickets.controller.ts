@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, Res } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiResponse as response }  from 'src/types/api-response.interface';
 import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto, TicketDto, TicketQRDto, TicketPreferenceDto } from './dto/index';
 import { createApiResponseDto, createApiResponseListDto } from 'src/types/create-api-response.dto';
 
@@ -11,7 +10,7 @@ export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Get()
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketDto), isArray: true})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketDto, 'TicketListDto'), isArray: true})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findAll(@Query() paginationTicketDto: PaginationTicketDto) {
@@ -19,7 +18,7 @@ export class TicketsController {
   }
 
   @Get('getQR/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto)})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto, 'TicketQRDto')})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findQRTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -27,7 +26,7 @@ export class TicketsController {
   }
 
   @Get('getVoucherPdf/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto)})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto, 'TicketVoucherDto')})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findVoucherPdfTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -35,7 +34,7 @@ export class TicketsController {
   }
 
   @Get('getPreferenceTickets')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto), isArray: true})
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto, 'TicketPreferenceDto'), isArray: true})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findAllPreferenceTicket() {
@@ -43,7 +42,7 @@ export class TicketsController {
   }
 
   @Get('getPreferenceTickets/:transactionId')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto), isArray: true })
+  @ApiResponse({status: 200, description: 'OK', type: createApiResponseListDto(TicketPreferenceDto, 'TicketPreferenceTransactionDto'), isArray: true })
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findPreferenceTicketByTransactionId(@Param('transactionId') transactionId: string) {
@@ -51,7 +50,7 @@ export class TicketsController {
   }
 
   @Post('createTicket')
-  @ApiResponse({status: 201, description: 'Created', type: createApiResponseDto(TicketDto)}) 
+  @ApiResponse({status: 201, description: 'Created', type: createApiResponseDto(TicketDto, 'TicketCreateDto')}) 
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   createTicket(@Body() createTicketDto: CreateTicketDto) {
@@ -59,7 +58,7 @@ export class TicketsController {
   }
 
   @Post('generateTickets')
-  @ApiResponse({status: 201, description: 'Created', type: createApiResponseListDto(TicketDto), isArray: true }) 
+  @ApiResponse({status: 201, description: 'Created', type: createApiResponseListDto(TicketDto, 'GenerateTicketDto'), isArray: true }) 
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   generateTickets(@Body() createTicketDto: CreateTicketDto[]) {
