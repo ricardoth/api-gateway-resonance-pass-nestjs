@@ -19,7 +19,7 @@ export class TicketsService {
         headers: {
           'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userDecimatioBasicAuth')}:${this.configService.get<string>('passDecimatioBasicAuth')}`).toString('base64')}`
         },
-      };
+    };
   }
 
   //#region GET Methods
