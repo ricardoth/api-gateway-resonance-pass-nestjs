@@ -26,7 +26,6 @@ export class TiposUsuarioService {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}TipoUsuario`;
       const response = await this.httpClient.get<ApiResponse<TipoUsuarioDto>>(url, this.config);
-      console.log(response);
       const mapEntity = mapEntityResponse(TipoUsuarioDto, response);
       return mapEntity;
     } catch (error) {

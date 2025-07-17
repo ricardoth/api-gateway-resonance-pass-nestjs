@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LugaresService } from './lugares.service';
 import { CreateLugarDto } from './dto/create-lugar.dto';
 import { UpdateLugarDto } from './dto/update-lugar.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('lugares')
 export class LugaresController {
@@ -13,13 +14,16 @@ export class LugaresController {
   }
 
   @Get()
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   findAll() {
     return this.lugaresService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.lugaresService.findOne(+id);
+  @Get(':idLugar')
+  findOne(@Param('idLugar') id: number) {
+    return this.lugaresService.findOne(id);
   }
 
   @Patch(':id')
