@@ -1,34 +1,17 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TiposUsuarioService } from './tipos-usuario.service';
-import { CreateTiposUsuarioDto } from './dto/create-tipos-usuario.dto';
-import { UpdateTiposUsuarioDto } from './dto/update-tipos-usuario.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('tipos-usuario')
 export class TiposUsuarioController {
   constructor(private readonly tiposUsuarioService: TiposUsuarioService) {}
 
-  @Post()
-  create(@Body() createTiposUsuarioDto: CreateTiposUsuarioDto) {
-    return this.tiposUsuarioService.create(createTiposUsuarioDto);
-  }
-
   @Get()
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   findAll() {
     return this.tiposUsuarioService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tiposUsuarioService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTiposUsuarioDto: UpdateTiposUsuarioDto) {
-    return this.tiposUsuarioService.update(+id, updateTiposUsuarioDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tiposUsuarioService.remove(+id);
-  }
+  
 }
