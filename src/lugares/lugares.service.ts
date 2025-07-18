@@ -24,8 +24,16 @@ export class LugaresService {
     }
   }
 
-  create(createLugareDto: CreateLugarDto) {
-    return 'This action adds a new lugare';
+  async create(createLugareDto: CreateLugarDto) {
+    try {
+      let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar`;
+      const response = await this.httpClient.post<ApiResponse<LugarDto>>(url, createLugareDto, this.config);
+      console.log('Response from API:', response);
+      const mapEntity = mapEntityResponse(LugarDto, response);
+      return mapEntity;
+    } catch (error) {
+      handleExceptions(error);
+    }
   }
 
   async findAll() {

@@ -9,6 +9,9 @@ export class LugaresController {
   constructor(private readonly lugaresService: LugaresService) {}
 
   @Post()
+  @ApiResponse({status: 201, description: 'Created'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   create(@Body() createLugareDto: CreateLugarDto) {
     return this.lugaresService.create(createLugareDto);
   }

@@ -18,7 +18,7 @@ export class TicketsController {
   }
 
   @Get('getQR/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto, 'TicketQRDto')})
+  @ApiResponse({status: 200, description: 'OK'})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findQRTicket(@Param('idTicket', ParseIntPipe) id: number) {
@@ -26,7 +26,7 @@ export class TicketsController {
   }
 
   @Get('getVoucherPdf/:idTicket')
-  @ApiResponse({status: 200, description: 'OK', type: createApiResponseDto(TicketQRDto, 'TicketVoucherDto')})
+  @ApiResponse({status: 200, description: 'OK'})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
   findVoucherPdfTicket(@Param('idTicket', ParseIntPipe) id: number) {
