@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { LugaresService } from './lugares.service';
 import { CreateLugarDto } from './dto/create-lugar.dto';
 import { UpdateLugarDto } from './dto/update-lugar.dto';
@@ -25,13 +25,14 @@ export class LugaresController {
   }
 
   @Get(':idLugar')
-  findOne(@Param('idLugar') id: number) {
+  findOne(@Param('idLugar', ParseIntPipe) id: number) {
     return this.lugaresService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLugareDto: UpdateLugarDto) {
-    return this.lugaresService.update(+id, updateLugareDto);
+  @Put(':idLugar')
+  update(@Param('idLugar', ParseIntPipe) id: number, @Body() updateLugarDto: UpdateLugarDto) {
+    console.log('Llego')
+    return this.lugaresService.update(id, updateLugarDto);
   }
 
   @Delete(':id')

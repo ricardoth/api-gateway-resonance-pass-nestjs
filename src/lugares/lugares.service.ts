@@ -28,7 +28,6 @@ export class LugaresService {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar`;
       const response = await this.httpClient.post<ApiResponse<LugarDto>>(url, createLugareDto, this.config);
-      console.log('Response from API:', response);
       const mapEntity = mapEntityResponse(LugarDto, response);
       return mapEntity;
     } catch (error) {
@@ -58,8 +57,18 @@ export class LugaresService {
     }
   }
 
-  update(id: number, updateLugareDto: UpdateLugarDto) {
-    return `This action updates a #${id} lugare`;
+  async update(id: number, updateLugareDto: UpdateLugarDto) {
+    try {
+      let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar?id=${id}`;
+      const response = await this.httpClient.put<ApiResponse<LugarDto>>(url, updateLugareDto, this.config);
+      console.log(response);
+      const mapEntity = mapEntityResponse(LugarDto, response);
+      return mapEntity;
+    } catch (error) {
+      console.error('Error updating lugar:', error);
+      handleExceptions(error);
+      
+    }
   }
 
   remove(id: number) {
