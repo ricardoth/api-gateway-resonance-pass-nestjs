@@ -21,7 +21,7 @@ export class CreateLugarDto extends BaseDto {
     @IsOptional()
     numeracion: string;
     @ApiProperty({ example: "Imagen Referencial del Lugar (Base64)" })
-    // @IsBase64()
+    @IsBase64()
     @IsString()
     @IsOptional()
     mapaReferencial: string;
