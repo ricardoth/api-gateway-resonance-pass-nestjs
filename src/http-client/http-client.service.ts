@@ -41,6 +41,7 @@ export class HttpClientService {
             const response = await firstValueFrom(this.httpService.put<T>(url, data, config));
             return response.data;
         } catch (error) {
+            console.error(`[ERROR] PUT Request failed: ${error}`);
             throw error;
         }
     }

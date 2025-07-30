@@ -25,18 +25,26 @@ export class LugaresController {
   }
 
   @Get(':idLugar')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   findOne(@Param('idLugar', ParseIntPipe) id: number) {
     return this.lugaresService.findOne(id);
   }
 
   @Put(':idLugar')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   update(@Param('idLugar', ParseIntPipe) id: number, @Body() updateLugarDto: UpdateLugarDto) {
-    console.log('Llego')
     return this.lugaresService.update(id, updateLugarDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.lugaresService.remove(+id);
+  @Delete(':idLugar')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  delete(@Param('idLugar', ParseIntPipe) id: number) {
+    return this.lugaresService.delete(id);
   }
 }

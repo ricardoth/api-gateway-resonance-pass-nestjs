@@ -49,29 +49,42 @@ export class LugaresService {
   async findOne(id: number) {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar/${id}`;
-      const response = await this.httpClient.get<ApiResponse<LugarDto>>(url, this.config);
-      const mapEntity = mapEntityResponse(LugarDto, response);
-      return mapEntity;
+      const {data, meta} = await this.httpClient.get<ApiResponse<LugarDto>>(url, this.config);
+      return data;
     } catch (error) {
       handleExceptions(error);
     }
   }
 
-  async update(id: number, updateLugareDto: UpdateLugarDto) {
+  async update(id: number, updateLugarDto: UpdateLugarDto) {
     try {
+      let lugarBd = await this.findOne(id);
+      console.log('Lugar encontrado', lugarBd);
+      console.log('Datos a actualizar', updateLugarDto);
+      const objUpdate = { 
+        ...lugarBd, 
+        ...updateLugarDto
+      };
+      console.log('Objeto a actualizar', objUpdate);
+
       let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar?id=${id}`;
-      const response = await this.httpClient.put<ApiResponse<LugarDto>>(url, updateLugareDto, this.config);
-      console.log(response);
+      const response = await this.httpClient.put<ApiResponse<LugarDto>>(url, objUpdate, this.config);
+      console.log('Lugar updated successfully', response);
       const mapEntity = mapEntityResponse(LugarDto, response);
       return mapEntity;
     } catch (error) {
-      console.error('Error updating lugar:', error);
       handleExceptions(error);
-      
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} lugare`;
+  async delete(id: number) {
+    try {
+      let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar/${id}`;
+      const response = await this.httpClient.delete(url, this.config);
+      console.log('Lugar deleted successfully', response);
+      return response;
+    } catch (error) {
+      handleExceptions(error);
+    }
   }
 }
