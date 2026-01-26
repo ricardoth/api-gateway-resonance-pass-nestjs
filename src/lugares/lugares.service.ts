@@ -71,7 +71,6 @@ export class LugaresService {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar/${id}`;
       const response = await this.httpClient.delete(url, this.config);
-      console.log('Lugar deleted successfully', response);
       return response;
     } catch (error) {
       handleExceptions(error);

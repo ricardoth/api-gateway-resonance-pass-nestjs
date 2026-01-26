@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { MediosPagosService } from './medios-pagos.service';
 import { CreateMediosPagoDto } from './dto/create-medios-pago.dto';
 import { UpdateMediosPagoDto } from './dto/update-medios-pago.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('medios-pagos')
 export class MediosPagosController {
@@ -13,22 +14,30 @@ export class MediosPagosController {
   }
 
   @Get()
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
   findAll() {
     return this.mediosPagosService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mediosPagosService.findOne(+id);
+  @Get(':idMedioPago')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  findOne(@Param('idMedioPago', ParseIntPipe) id: number) {
+    return this.mediosPagosService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMediosPagoDto: UpdateMediosPagoDto) {
-    return this.mediosPagosService.update(+id, updateMediosPagoDto);
+  @Put(':idMedioPago')
+  update(@Param('idMedioPago', ParseIntPipe) id: number, @Body() updateMediosPagoDto: UpdateMediosPagoDto) {
+    return this.mediosPagosService.update(id, updateMediosPagoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mediosPagosService.remove(+id);
+  @Delete(':idMedioPago')
+  @ApiResponse({status: 200, description: 'OK'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
+  remove(@Param('idMedioPago', ParseIntPipe) id: number) {
+    return this.mediosPagosService.remove(id);
   }
 }
