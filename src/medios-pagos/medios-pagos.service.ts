@@ -24,8 +24,15 @@ export class MediosPagosService {
     }
   }
 
-  create(createMediosPagoDto: CreateMediosPagoDto) {
-    return 'This action adds a new mediosPago';
+  async create(createMediosPagoDto: CreateMediosPagoDto) {
+    try {
+      let url = `${this.configService.get<string>('urlApiDecimatio')}MedioPago`;
+      const response = await this.httpClient.post<ApiResponse<MedioPagoDto>>(url, createMediosPagoDto, this.config);
+      const mapEntity = mapEntityResponse(MedioPagoDto, response);
+      return mapEntity;
+    } catch (error) {
+      handleExceptions(error);
+    }
   }
 
   async findAll() {

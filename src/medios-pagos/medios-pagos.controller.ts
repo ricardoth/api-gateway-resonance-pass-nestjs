@@ -9,6 +9,9 @@ export class MediosPagosController {
   constructor(private readonly mediosPagosService: MediosPagosService) {}
 
   @Post()
+  @ApiResponse({status: 201, description: 'Created'})
+  @ApiResponse({status: 400, description: 'Bad Request'})
+  @ApiResponse({status: 404, description: 'Not Found'})
   create(@Body() createMediosPagoDto: CreateMediosPagoDto) {
     return this.mediosPagosService.create(createMediosPagoDto);
   }
