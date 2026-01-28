@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMediosPagoDto } from './dto/create-medios-pago.dto';
-import { UpdateMediosPagoDto } from './dto/update-medios-pago.dto';
+import { CreateMedioPagoDto } from './dto/create-medio-pago.dto';
+import { UpdateMedioPagoDto } from './dto/update-medio-pago.dto';
 import { AxiosRequestConfig } from 'axios';
 import { HttpClientService } from 'src/http-client/http-client.service';
 import { ConfigService } from '@nestjs/config';
@@ -24,10 +24,10 @@ export class MediosPagosService {
     }
   }
 
-  async create(createMediosPagoDto: CreateMediosPagoDto) {
+  async create(createMedioPagoDto: CreateMedioPagoDto) {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}MedioPago`;
-      const response = await this.httpClient.post<ApiResponse<MedioPagoDto>>(url, createMediosPagoDto, this.config);
+      const response = await this.httpClient.post<ApiResponse<MedioPagoDto>>(url, createMedioPagoDto, this.config);
       const mapEntity = mapEntityResponse(MedioPagoDto, response);
       return mapEntity;
     } catch (error) {
@@ -56,10 +56,10 @@ export class MediosPagosService {
     }
   }
 
-  async update(id: number, updateMediosPagoDto: UpdateMediosPagoDto) {
+  async update(id: number, updateMedioPagoDto: UpdateMedioPagoDto) {
     try {
         let url = `${this.configService.get<string>('urlApiDecimatio')}MedioPago?id=${id}`;
-        const response = await this.httpClient.put<ApiResponse<MedioPagoDto>>(url, updateMediosPagoDto, this.config);
+        const response = await this.httpClient.put<ApiResponse<MedioPagoDto>>(url, updateMedioPagoDto, this.config);
         console.log(response);
         const mapEntity = mapEntityResponse(MedioPagoDto, response);
         return mapEntity;

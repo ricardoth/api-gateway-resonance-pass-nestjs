@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 import { BaseDto } from "src/types/base.dto";
 
-export class CreateMediosPagoDto extends BaseDto {
+export class CreateMedioPagoDto extends BaseDto {
     @ApiProperty({ example: "Nombre del Medio de Pago" })
     @IsString()
     @IsOptional()

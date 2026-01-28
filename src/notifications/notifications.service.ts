@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNotificationDto } from './dto/create-notification.dto';
-import { UpdateNotificationDto } from './dto/update-notification.dto';
+import { MercadoPagoNotificationDto } from './dto/mercado-pago-notification.dto';
+import { handleExceptions } from 'src/utils/handle-exceptions';
+import { AxiosRequestConfig } from 'axios';
+import { HttpClientService } from 'src/http-client/http-client.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NotificationsService {
-  create(createNotificationDto: CreateNotificationDto) {
-    return 'This action adds a new notification';
+  private config: AxiosRequestConfig;
+
+  
+  constructor(
+    private readonly httpClient: HttpClientService,
+    private readonly configService: ConfigService
+  ) {
+    this.config = {
+      headers: {
+        'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userDecimatioBasicAuth')}:${this.configService.get<string>('passDecimatioBasicAuth')}`).toString('base64')}`
+      }
+    }
   }
 
-  findAll() {
-    return `This action returns all notifications`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} notification`;
-  }
-
-  update(id: number, updateNotificationDto: UpdateNotificationDto) {
-    return `This action updates a #${id} notification`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} notification`;
+  async create(mercadoPagoNotificationDto: MercadoPagoNotificationDto) {
+    try {
+      let url = `${this.configService.get<string>('urlApiDecimatio')}MedioPago`;
+      const response = await this.httpClient.post<string>(url, mercadoPagoNotificationDto, this.config);
+      return response;
+     
+    } catch (error) {
+      handleExceptions(error);
+    }
   }
 }

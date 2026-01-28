@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { MediosPagosService } from './medios-pagos.service';
-import { CreateMediosPagoDto } from './dto/create-medios-pago.dto';
-import { UpdateMediosPagoDto } from './dto/update-medios-pago.dto';
+import { CreateMedioPagoDto } from './dto/create-medio-pago.dto';
+import { UpdateMedioPagoDto } from './dto/update-medio-pago.dto';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('medios-pagos')
@@ -12,7 +12,7 @@ export class MediosPagosController {
   @ApiResponse({status: 201, description: 'Created'})
   @ApiResponse({status: 400, description: 'Bad Request'})
   @ApiResponse({status: 404, description: 'Not Found'})
-  create(@Body() createMediosPagoDto: CreateMediosPagoDto) {
+  create(@Body() createMediosPagoDto: CreateMedioPagoDto) {
     return this.mediosPagosService.create(createMediosPagoDto);
   }
 
@@ -32,7 +32,7 @@ export class MediosPagosController {
   }
 
   @Put(':idMedioPago')
-  update(@Param('idMedioPago', ParseIntPipe) id: number, @Body() updateMediosPagoDto: UpdateMediosPagoDto) {
+  update(@Param('idMedioPago', ParseIntPipe) id: number, @Body() updateMediosPagoDto: UpdateMedioPagoDto) {
     return this.mediosPagosService.update(id, updateMediosPagoDto);
   }
 
