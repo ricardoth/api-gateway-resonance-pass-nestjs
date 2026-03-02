@@ -16,17 +16,16 @@ export class NotificationsService {
   ) {
     this.config = {
       headers: {
-        'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userDecimatioBasicAuth')}:${this.configService.get<string>('passDecimatioBasicAuth')}`).toString('base64')}`
+        'Authorization': `Basic ${Buffer.from(`${this.configService.get<string>('userPagosBasicAuth')}:${this.configService.get<string>('passPagosBasicAuth')}`).toString('base64')}`
       }
     }
   }
 
   async create(mercadoPagoNotificationDto: MercadoPagoNotificationDto) {
     try {
-      let url = `${this.configService.get<string>('urlApiDecimatio')}MedioPago`;
+      let url = `${this.configService.get<string>('urlApiPagos')}Notification`;
       const response = await this.httpClient.post<string>(url, mercadoPagoNotificationDto, this.config);
       return response;
-     
     } catch (error) {
       handleExceptions(error);
     }
