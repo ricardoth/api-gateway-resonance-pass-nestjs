@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateSectoreDto } from './dto/create-sectore.dto';
-import { UpdateSectoreDto } from './dto/update-sectore.dto';
+import { CreateSectorDto } from './dto/create-sector.dto';
+import { UpdateSectorDto } from './dto/update-sector.dto';
 import { SectoresService } from './sectores.service';
 
 @ApiTags('Sector')
@@ -19,7 +19,7 @@ export class SectoresController {
   @Post()
   @ApiResponse({ status: 201, description: 'Created' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
-  create(@Body() createSectoreDto: CreateSectoreDto) {
+  create(@Body() createSectoreDto: CreateSectorDto) {
     return this.sectoresService.create(createSectoreDto);
   }
 
@@ -29,9 +29,9 @@ export class SectoresController {
   @ApiResponse({ status: 404, description: 'Not Found' })
   update(
     @Param('idSector', ParseIntPipe) id: number,
-    @Body() updateSectoreDto: UpdateSectoreDto,
+    @Body() updateSectorDto: UpdateSectorDto,
   ) {
-    return this.sectoresService.update(id, updateSectoreDto);
+    return this.sectoresService.update(id, updateSectorDto);
   }
 
   @Get('GetSectoresByEvento/:idEvento')

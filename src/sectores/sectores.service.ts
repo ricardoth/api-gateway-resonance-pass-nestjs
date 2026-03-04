@@ -5,9 +5,9 @@ import { HttpClientService } from 'src/http-client/http-client.service';
 import { ApiResponse } from 'src/types/api-response.interface';
 import { handleExceptions } from 'src/utils/handle-exceptions';
 import { mapEntityResponse } from 'src/utils/map-entity';
-import { CreateSectoreDto } from './dto/create-sectore.dto';
+import { CreateSectorDto } from './dto/create-sector.dto';
 import { SectorDto } from './dto/sector.dto';
-import { UpdateSectoreDto } from './dto/update-sectore.dto';
+import { UpdateSectorDto } from './dto/update-sector.dto';
 
 @Injectable()
 export class SectoresService {
@@ -36,20 +36,20 @@ export class SectoresService {
     }
   }
 
-  async create(createSectoreDto: CreateSectoreDto) {
+  async create(createSectorDto: CreateSectorDto) {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Sector`;
-      const response = await this.httpClient.post<ApiResponse<SectorDto>>(url, createSectoreDto, this.config);
+      const response = await this.httpClient.post<ApiResponse<SectorDto>>(url, createSectorDto, this.config);
       return mapEntityResponse(SectorDto, response);
     } catch (error) {
       handleExceptions(error);
     }
   }
 
-  async update(id: number, updateSectoreDto: UpdateSectoreDto) {
+  async update(id: number, updateSectorDto: UpdateSectorDto) {
     try {
       const url = `${this.configService.get<string>('urlApiDecimatio')}Sector?id=${id}`;
-      const response = await this.httpClient.put<ApiResponse<SectorDto>>(url, updateSectoreDto, this.config);
+      const response = await this.httpClient.put<ApiResponse<SectorDto>>(url, updateSectorDto, this.config);
       return mapEntityResponse(SectorDto, response);
     } catch (error) {
       handleExceptions(error);

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsHexColor, IsInt, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { BaseDto } from 'src/types/base.dto';
 
-export class CreateSectoreDto extends BaseDto {
+export class CreateSectorDto extends BaseDto {
   @ApiProperty({ example: 'Platea Norte', description: 'Nombre del sector' })
   @IsString()
   nombreSector: string;
