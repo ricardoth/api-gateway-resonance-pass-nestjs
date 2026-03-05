@@ -11,6 +11,7 @@ import { FilterUsuarioDto } from './dto/filter-usuario.dto';
 import { LoginUsuarioDto } from './dto/login-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { UsuarioDto } from './dto/usuario.dto';
+import { UsuarioQueryFilterDto } from './dto/usuario-query-filter.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -29,9 +30,12 @@ export class UsuariosService {
     };
   }
 
-  async findAll() {
+  async findAll(usuarioQueryFilterDto: UsuarioQueryFilterDto) {
     try {
-      const url = `${this.configService.get<string>('urlApiDecimatio')}Usuario`;
+      const paginationFilter =  `pageSize=${usuarioQueryFilterDto.pageSize}&pageNumber=${usuarioQueryFilterDto.pageNumber}`;
+      const queryFilter = usuarioQueryFilterDto.query ? `&query=${usuarioQueryFilterDto.query}` : '';
+
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Usuario?${paginationFilter}${queryFilter}`;
       const response = await this.httpClient.get<ApiResponse<UsuarioDto>>(url, this.config);
       return mapEntityResponse(UsuarioDto, response);
     } catch (error) {
@@ -81,13 +85,19 @@ export class UsuariosService {
 
   async findByFilter(filterUsuarioDto: FilterUsuarioDto) {
     try {
-      const url = `${this.configService.get<string>('urlApiDecimatio')}Usuario/GetUsersFilter`;
-      const response = await this.httpClient.get<ApiResponse<UsuarioDto>>(url, {
-        ...this.config,
-        params: filterUsuarioDto,
-      });
+      let filter = '';
+        if (filterUsuarioDto.rut) filter += `filtro=${filterUsuarioDto.rut}`;
+        if (filterUsuarioDto.nombres) filter += `filtro=${filterUsuarioDto.nombres}`;
+        if (filterUsuarioDto.apellidoP) filter += `filtro=${filterUsuarioDto.apellidoP}`;
+        if (filterUsuarioDto.correo) filter += `filtro=${filterUsuarioDto.correo}`;
+        if (filterUsuarioDto.idTipoUsuario) filter += `filtro=${filterUsuarioDto.idTipoUsuario}`;
+        if (filterUsuarioDto.esExtranjero !== undefined) filter += `filtro=${filterUsuarioDto.esExtranjero}`;
+
+      const url = `${this.configService.get<string>('urlApiDecimatio')}Usuario/GetUsersFilter?${filter}`;
+      const response = await this.httpClient.get<ApiResponse<UsuarioDto>>(url, this.config);
       return mapEntityResponse(UsuarioDto, response);
     } catch (error) {
+      console.log(error)
       handleExceptions(error);
     }
   }

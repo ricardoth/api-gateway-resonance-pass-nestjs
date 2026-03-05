@@ -16,6 +16,7 @@ import { FilterUsuarioDto } from './dto/filter-usuario.dto';
 import { LoginUsuarioDto } from './dto/login-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { UsuariosService } from './usuarios.service';
+import { UsuarioQueryFilterDto } from './dto/usuario-query-filter.dto';
 
 @ApiTags('Usuario')
 @Controller('Usuario')
@@ -25,8 +26,8 @@ export class UsuariosController {
   @Get()
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
-  findAll() {
-    return this.usuariosService.findAll();
+  findAll(@Query() usuarioQueryFilterDto: UsuarioQueryFilterDto) {
+    return this.usuariosService.findAll(usuarioQueryFilterDto);
   }
 
   @Get('GetUsersFilter')
