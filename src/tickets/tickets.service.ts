@@ -25,7 +25,7 @@ export class TicketsService {
   //#region GET Methods
   async findAll(paginationTicketDto: PaginationTicketDto) {
     try {
-      const { idTicket, idUsuario, idEvento, idSector, idMedioPago, PageNumber, PageSize } = paginationTicketDto;
+      const { idTicket, idUsuario, idEvento, idSector, idMedioPago, pageNumber, pageSize } = paginationTicketDto;
       let url = `${this.configService.get<string>('urlApiDecimatio')}Ticket`;
 
       this.config.params = {
@@ -34,8 +34,8 @@ export class TicketsService {
         idEvento: idEvento,
         idSector: idSector,
         idMedioPago: idMedioPago,
-        PageNumber: PageNumber,
-        PageSize: PageSize
+        PageNumber: pageNumber,
+        PageSize: pageSize
       }
       
       const tickets = await this.httpClient.get<ApiResponse<TicketDto>>(url, this.config);

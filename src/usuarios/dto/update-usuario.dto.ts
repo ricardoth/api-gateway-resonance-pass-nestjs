@@ -4,7 +4,7 @@ import { IsInt } from 'class-validator';
 import { CreateUsuarioDto } from './create-usuario.dto';
 
 export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {
-  @ApiProperty({ example: 1, description: 'ID del usuario a actualizar' })
+  @ApiProperty({ description: 'ID del usuario a actualizar' })
   @IsInt()
   idUsuario: number;
 }

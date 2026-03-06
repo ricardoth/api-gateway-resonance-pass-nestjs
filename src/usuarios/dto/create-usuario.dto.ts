@@ -11,52 +11,52 @@ import {
 import { BaseDto } from 'src/types/base.dto';
 
 export class CreateUsuarioDto extends BaseDto {
-  @ApiProperty({ example: 1, description: 'ID del tipo de usuario' })
+  @ApiProperty({ description: 'ID del tipo de usuario' })
   @IsInt()
   idTipoUsuario: number;
 
-  @ApiProperty({ example: 12345678, description: 'RUT sin dígito verificador' })
+  @ApiProperty({ description: 'RUT sin dígito verificador' })
   @IsInt()
   rut: number;
 
-  @ApiProperty({ example: 'K', description: 'Dígito verificador del RUT' })
+  @ApiProperty({ description: 'Dígito verificador del RUT' })
   @IsString()
   @Length(1, 1)
   dv: string;
 
-  @ApiProperty({ example: 'Juan', description: 'Nombres del usuario' })
+  @ApiProperty({ description: 'Nombres del usuario' })
   @IsString()
   nombres: string;
 
-  @ApiProperty({ example: 'Pérez', description: 'Apellido paterno' })
+  @ApiProperty({ description: 'Apellido paterno' })
   @IsString()
   apellidoP: string;
 
-  @ApiProperty({ example: 'González', description: 'Apellido materno' })
+  @ApiProperty({ description: 'Apellido materno' })
   @IsString()
   @IsOptional()
   apellidoM?: string;
 
-  @ApiProperty({ example: 'Av. Siempre Viva 742', description: 'Dirección del usuario' })
+  @ApiProperty({ description: 'Dirección del usuario' })
   @IsString()
   @IsOptional()
   direccion?: string;
 
-  @ApiProperty({ example: '+56912345678', description: 'Número de teléfono' })
+  @ApiProperty({ description: 'Número de teléfono' })
   @IsString()
   @IsOptional()
   telefono?: string;
 
-  @ApiProperty({ example: 'juan.perez@email.com', description: 'Correo electrónico' })
+  @ApiProperty({ description: 'Correo electrónico' })
   @IsEmail()
   correo: string;
 
-  @ApiProperty({ example: 'MiContraseña123!', description: 'Contraseña del usuario' })
+  @ApiProperty({ description: 'Contraseña del usuario' })
   @IsString()
   @MinLength(8)
-  contrasena: string;
+  contrasena?: string;
 
-  @ApiProperty({ example: false, description: 'Indica si el usuario es extranjero' })
+  @ApiProperty({ description: 'Indica si el usuario es extranjero' })
   @IsBoolean()
   @IsOptional()
   esExtranjero?: boolean;
