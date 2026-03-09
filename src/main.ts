@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpErrorFilter } from './common/filters/http-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +19,8 @@ async function bootstrap() {
       },
     })
   );
+
+  app.useGlobalFilters(new HttpErrorFilter());
 
   const config = new DocumentBuilder()
   .setTitle('Gateway Resonance Pass API')
