@@ -50,7 +50,8 @@ export class LugaresService {
     try {
       let url = `${this.configService.get<string>('urlApiDecimatio')}Lugar/${id}`;
       const response = await this.httpClient.get<ApiResponse<LugarDto>>(url, this.config);
-      return response;
+      const mapEntity = mapEntityResponse(LugarDto, response);
+      return mapEntity;
     } catch (error) {
       handleExceptions(error);
     }

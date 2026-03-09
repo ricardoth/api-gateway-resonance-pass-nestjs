@@ -3,49 +3,49 @@ import { IsHexColor, IsInt, IsNumber, IsOptional, IsString, Min } from 'class-va
 import { BaseDto } from 'src/types/base.dto';
 
 export class CreateSectorDto extends BaseDto {
-  @ApiProperty({ example: 'Platea Norte', description: 'Nombre del sector' })
+  @ApiProperty({ description: 'Nombre del sector' })
   @IsString()
   nombreSector: string;
 
-  @ApiProperty({ example: 1, description: 'ID del evento al que pertenece el sector' })
+  @ApiProperty({ description: 'ID del evento al que pertenece el sector' })
   @IsInt()
   idEvento: number;
 
-  @ApiProperty({ example: 500, description: 'Capacidad total del sector' })
+  @ApiProperty({ description: 'Capacidad total del sector' })
   @IsInt()
   @Min(1)
   capacidadTotal: number;
 
-  @ApiProperty({ example: 500, description: 'Capacidad disponible (inicial = capacidadTotal)' })
+  @ApiProperty({ description: 'Capacidad disponible (inicial = capacidadTotal)', required: false })
   @IsInt()
   @Min(0)
   @IsOptional()
   capacidadDisponible?: number;
 
-  @ApiProperty({ example: 0, description: 'Capacidad actual ocupada' })
+  @ApiProperty({ description: 'Capacidad actual ocupada', required: false })
   @IsInt()
   @Min(0)
   @IsOptional()
   capacidadActual?: number;
 
-  @ApiProperty({ example: 25000, description: 'Precio base del sector' })
+  @ApiProperty({ description: 'Precio base del sector' })
   @IsNumber()
   @Min(0)
   precio: number;
 
-  @ApiProperty({ example: 1500, description: 'Cargo por servicio' })
+  @ApiProperty({ description: 'Cargo por servicio', required: false })
   @IsNumber()
   @Min(0)
   @IsOptional()
   cargo?: number;
 
-  @ApiProperty({ example: 26500, description: 'Total (precio + cargo)' })
+  @ApiProperty({ description: 'Total (precio + cargo)', required: false })
   @IsNumber()
   @Min(0)
   @IsOptional()
   total?: number;
 
-  @ApiProperty({ example: '#FF5733', description: 'Color hexadecimal del sector en el mapa' })
+  @ApiProperty({ description: 'Color hexadecimal del sector en el mapa', required: false })
   @IsHexColor()
   @IsOptional()
   colorHexa?: string;
