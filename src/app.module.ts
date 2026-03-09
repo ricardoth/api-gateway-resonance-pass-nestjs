@@ -17,6 +17,7 @@ import { ComunasModule } from './comunas/comunas.module';
 import { MediosPagosModule } from './medios-pagos/medios-pagos.module';
 import { RegionesModule } from './regiones/regiones.module';
 import { TiposUsuarioModule } from './tipos-usuario/tipos-usuario.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -28,10 +29,25 @@ import { TiposUsuarioModule } from './tipos-usuario/tipos-usuario.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     TicketsModule, 
-    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule, SectoresModule, LugaresModule, ComunasModule, MediosPagosModule, RegionesModule, TiposUsuarioModule
+    HttpClientModule, UsuariosModule, EventosModule, PreferencesModule, NotificationsModule, SectoresModule, LugaresModule, ComunasModule, MediosPagosModule, RegionesModule, TiposUsuarioModule,
+    
+    ThrottlerModule.forRoot([{
+      name: 'short',
+      ttl: 1000,
+      limit: 5,
+    }, {
+      name: 'long',
+      ttl: 60000,
+      limit: 100,
+    }])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: 'APP_GUARD',
+      useClass: ThrottlerGuard
+    }
+  ],
 })
 export class AppModule {
 }
