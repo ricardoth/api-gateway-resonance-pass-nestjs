@@ -12,8 +12,6 @@ export class AuthService {
 
   async login(user: string, password: string) {
     const baseUrl = this.config.get<string>('AUTH_SERVICE_URL');
-
-    console.log(baseUrl, 'baseUrl auth')
     try {
       const { data } = await firstValueFrom(
         this.httpService.post(`${baseUrl}/api/Token`, { user, password }),
