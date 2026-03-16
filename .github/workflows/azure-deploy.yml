@@ -8,6 +8,7 @@ on:
 env:
   NODE_VERSION: '20.x'
   AZURE_WEBAPP_NAME: api-gateway-resonance-pass
+  RESOURCE_GROUP: rg-dev-desarrollo
 
 jobs:
   build:
@@ -57,9 +58,13 @@ jobs:
         with:
           name: api-gateway-resonance-pass
 
+      - name: Login en Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Desplegar en Azure App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
