@@ -40,11 +40,11 @@ import { AuthModule } from './auth/auth.module';
     ThrottlerModule.forRoot([{
       name: 'short',
       ttl: 1000,
-      limit: 5,
+      limit: 20,
     }, {
       name: 'long',
       ttl: 60000,
-      limit: 100,
+      limit: 200,
     }]),
     
     AuthModule

@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTicketQueueDto, CreateTicketDto, PaginationTicketDto } from './dto/index';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Tickets')
 @Controller('tickets')
 export class TicketsController {

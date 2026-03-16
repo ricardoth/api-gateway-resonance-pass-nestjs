@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { MediosPagosService } from './medios-pagos.service';
 import { CreateMedioPagoDto } from './dto/create-medio-pago.dto';
 import { UpdateMedioPagoDto } from './dto/update-medio-pago.dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('medios-pagos')
 export class MediosPagosController {
   constructor(private readonly mediosPagosService: MediosPagosService) {}

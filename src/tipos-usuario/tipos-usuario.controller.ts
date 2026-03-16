@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { TiposUsuarioService } from './tipos-usuario.service';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('tipos-usuario')
 export class TiposUsuarioController {
   constructor(private readonly tiposUsuarioService: TiposUsuarioService) {}

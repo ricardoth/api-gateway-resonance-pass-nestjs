@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateEventoDto } from './dto/create-evento.dto';
 import { PaginationEventoDto } from './dto/pagination-evento.dto';
 import { UpdateEventoDto } from './dto/update-evento.dto';
 import { EventosService } from './eventos.service';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)  
 @ApiTags('Evento')
 @Controller('Evento')
 export class EventosController {

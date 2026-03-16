@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put, UseGuards } from '@nestjs/common';
 import { LugaresService } from './lugares.service';
 import { CreateLugarDto } from './dto/create-lugar.dto';
 import { UpdateLugarDto } from './dto/update-lugar.dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('lugares')
 export class LugaresController {
   constructor(private readonly lugaresService: LugaresService) {}
