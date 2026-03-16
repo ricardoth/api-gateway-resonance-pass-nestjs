@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { TicketsModule } from './tickets/tickets.module';
 import { HttpClientModule } from './http-client/http-client.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
 import { EnvConfiguration } from './config/app.config';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { EventosModule } from './eventos/eventos.module';
@@ -26,9 +26,9 @@ import { AuthModule } from './auth/auth.module';
       load: [EnvConfiguration],
 
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'public'),
+    // }),
     TicketsModule, 
     HttpClientModule, UsuariosModule, 
     EventosModule, PreferencesModule, 
